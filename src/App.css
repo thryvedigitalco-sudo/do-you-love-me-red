@@ -195,3 +195,9 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+.no-ending { display: flex; flex-direction: column; align-items: center; gap: 18px; animation: fade-in .4s ease both; }
+.no-ending .yes-gif { width: min(220px, 55vw); height: min(220px, 55vw); object-fit: contain; }
+.no-ending p { color: #fffaf4; font-size: 1.3rem; font-weight: 600; margin: 0; }
+.try-again-btn { border: 0; border-radius: 999px; background: #fffaf4; color: #a80728; font-weight: 800; font-size: 1.15rem; padding: 14px 30px; cursor: pointer; box-shadow: 0 6px 24px #57071945; }
+.try-again-btn:hover { transform: translateY(-2px); }
