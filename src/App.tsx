@@ -133,7 +133,7 @@ export default function App() {
                 alt="A cute character asking you to say yes"
               />
             </div>
-            <div className={`buttons${noCount >= 4 && noPosition === null ? " no-centered" : ""}`}>
+            <div className={`buttons${noCount >= 4 && noPosition === null ? " pre-runaway" : ""}`}>
               <button
                 id="yes-btn"
                 type="button"
