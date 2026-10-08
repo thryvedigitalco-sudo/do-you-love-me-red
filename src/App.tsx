@@ -30,21 +30,32 @@ export default function App() {
   const [musicTouched, setMusicTouched] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const moveNoButton = () => {
+    const button = noButtonRef.current;
+    if (!button) return;
+    const margin = 20;
+    const maxX = Math.max(margin, window.innerWidth - button.offsetWidth - margin);
+    const maxY = Math.max(margin, window.innerHeight - button.offsetHeight - margin);
+    // Put the button somewhere new and comfortably inside the viewport.
+    const current = button.getBoundingClientRect();
+    let left = margin, top = margin;
+    for (let attempt = 0; attempt < 12; attempt++) {
+      left = margin + Math.random() * (maxX - margin);
+      top = margin + Math.random() * (maxY - margin);
+      if (Math.hypot(left - current.left, top - current.top) > 120) break;
+    }
+    setNoPosition({ left, top });
+  };
+
   const handleNoClick = () => {
+    // The fifth No click starts the chase without requiring a new hover event.
+    if (noCount >= 4) moveNoButton();
     setNoCount((count) => count + 1);
     setToast("");
   };
 
   const runAway = () => {
-    if (noCount < 5 || !noButtonRef.current) return;
-    const button = noButtonRef.current;
-    const margin = 20;
-    const maxX = Math.max(margin, window.innerWidth - button.offsetWidth - margin);
-    const maxY = Math.max(margin, window.innerHeight - button.offsetHeight - margin);
-    setNoPosition({
-      left: margin + Math.random() * (maxX - margin),
-      top: margin + Math.random() * (maxY - margin),
-    });
+    if (noCount >= 5) moveNoButton();
   };
 
   const handleYesClick = () => {
@@ -122,7 +133,7 @@ export default function App() {
                 alt="A cute character asking you to say yes"
               />
             </div>
-            <div className={`buttons${noCount >= 4 ? " no-centered" : ""}`}>
+            <div className={`buttons${noCount >= 4 && noPosition === null ? " no-centered" : ""}`}>
               <button
                 id="yes-btn"
                 type="button"
