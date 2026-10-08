@@ -201,3 +201,29 @@
 .no-ending p { color: #fffaf4; font-size: 1.3rem; font-weight: 600; margin: 0; }
 .try-again-btn { border: 0; border-radius: 999px; background: #fffaf4; color: #a80728; font-weight: 800; font-size: 1.15rem; padding: 14px 30px; cursor: pointer; box-shadow: 0 6px 24px #57071945; }
 .try-again-btn:hover { transform: translateY(-2px); }
+
+/* Keep every No message the same size, and center No over Yes at the transition. */
+.buttons { position: relative; }
+#no-btn {
+  width: min(260px, 72vw);
+  min-width: 0;
+  min-height: 66px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: break-word;
+  padding: 10px 16px;
+}
+.buttons.no-centered #no-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+@media (max-width: 520px) {
+  #no-btn { width: min(230px, 72vw); min-height: 70px; padding: 10px 12px; }
+}
