@@ -1,0 +1,197 @@
+.valentine-page {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #7d0617;
+  background-image:
+    radial-gradient(circle at 20% 80%, #e63b44 0%, transparent 43%),
+    radial-gradient(circle at 85% 15%, #a60722 0%, transparent 46%),
+    radial-gradient(circle at 50% 48%, #f36965 0%, #bb1932 64%, #790719 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hearts-bg {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hearts-bg::before,
+.hearts-bg::after {
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  color: #fff0eb;
+  content: "❤️ ♥ ❤️ ♥ ❤️";
+  font-size: 1.5rem;
+  opacity: 0.22;
+  white-space: nowrap;
+  animation: float-hearts 12s linear infinite;
+}
+
+.hearts-bg::after {
+  left: 60%;
+  content: "♥ ❤️ ♥ ❤️ ♥";
+  animation-delay: 6s;
+}
+
+.valentine-content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 32px, 760px);
+  padding: 34px 12px 28px;
+  text-align: center;
+}
+
+.valentine-content h1 {
+  margin: 0 0 20px;
+  color: #fffaf4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.2;
+  text-shadow: 2px 2px 0 rgba(91, 0, 15, 0.45);
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.gif-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+#cat-gif,
+.yes-gif {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  animation: character-in 0.35s ease both;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.buttons button {
+  max-width: min(100%, 92vw);
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-family: Nunito, Arial, sans-serif;
+  font-weight: 900;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+}
+
+.buttons button:focus-visible,
+.music-toggle:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+#yes-btn {
+  border-radius: 16px;
+  background: linear-gradient(135deg, #e91e3b, #ad092b);
+  box-shadow: 0 6px 20px rgba(93, 0, 19, 0.42);
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+#yes-btn:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 10px 28px rgba(93, 0, 19, 0.55);
+}
+
+#yes-btn:active { transform: scale(0.98); }
+
+#no-btn {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #792238, #4d0c20);
+  box-shadow: 0 4px 14px rgba(65, 0, 13, 0.4);
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  padding: 12px 28px;
+}
+
+#no-btn:hover { background: linear-gradient(135deg, #8d2840, #5f1027); }
+
+.tease-toast {
+  min-height: 1.5rem;
+  margin-top: 14px;
+  color: #fffaf4;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.tease-toast.show { opacity: 1; transform: translateY(0); }
+
+.music-toggle {
+  position: fixed;
+  z-index: 5;
+  right: 20px;
+  bottom: 20px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: transform 0.2s;
+}
+
+.music-toggle:hover { transform: scale(1.1); }
+
+.yes-scene { position: relative; padding: 10px 0 18px; }
+.yes-scene .yes-gif { width: 260px; height: 260px; }
+.valentine-content h1.yes-title { margin: 0; font-size: clamp(2.3rem, 6vw, 2.8rem); animation: bounce-title 0.6s ease-in-out infinite alternate; }
+.yes-message { margin-top: 24px; color: #fffaf4; font-size: clamp(1.2rem, 3vw, 1.4rem); font-weight: 700; animation: fade-in 1s 0.2s both; }
+.confetti { position: fixed; z-index: 4; inset: 0; overflow: hidden; pointer-events: none; }
+.confetti-piece { position: absolute; top: -2vh; width: 7px; height: 12px; opacity: 0.9; animation: confetti-fall 4s linear infinite; }
+.confetti-piece:nth-child(3n) { width: 4px; height: 16px; }
+.confetti-piece:nth-child(3n + 1) { width: 9px; height: 7px; border-radius: 50%; }
+
+@keyframes float-hearts { from { transform: translateY(0); opacity: 0.22; } to { transform: translateY(-110vh); opacity: 0; } }
+@keyframes wiggle { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
+@keyframes character-in { from { opacity: 0.35; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+@keyframes bounce-title { from { transform: translateY(0) rotate(-1deg); } to { transform: translateY(-12px) rotate(1deg); } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes confetti-fall { 0% { opacity: 0; translate: 0 -2vh; rotate: 0deg; } 10% { opacity: 1; } 100% { opacity: 0; translate: 20px 110vh; rotate: 720deg; } }
+
+@media (max-width: 520px) {
+  .valentine-content { width: min(100% - 20px, 420px); padding-inline: 4px; }
+  .valentine-content h1 { font-size: clamp(1.65rem, 7vw, 2.15rem); }
+  #cat-gif { width: 180px; height: 180px; }
+  .buttons { gap: 12px; margin-top: 20px; }
+  #no-btn { padding: 11px 20px; }
+  .music-toggle { right: 14px; bottom: 14px; width: 48px; height: 48px; }
+}
+
+@media (max-height: 690px) and (min-width: 521px) {
+  .valentine-content { padding-block: 10px; }
+  #cat-gif { width: 160px; height: 160px; }
+  .gif-container { margin-block: 8px; }
+  .buttons { margin-top: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
