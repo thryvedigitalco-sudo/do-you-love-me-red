@@ -39,9 +39,11 @@ export default function App() {
     if (noCount < 5 || !noButtonRef.current) return;
     const button = noButtonRef.current;
     const margin = 20;
+    const maxX = Math.max(margin, window.innerWidth - button.offsetWidth - margin);
+    const maxY = Math.max(margin, window.innerHeight - button.offsetHeight - margin);
     setNoPosition({
-      left: Math.random() * Math.max(0, window.innerWidth - button.offsetWidth - margin) + margin / 2,
-      top: Math.random() * Math.max(0, window.innerHeight - button.offsetHeight - margin) + margin / 2,
+      left: margin + Math.random() * (maxX - margin),
+      top: margin + Math.random() * (maxY - margin),
     });
   };
 
@@ -79,7 +81,8 @@ export default function App() {
     }
   };
 
-  const yesSize = Math.min(1.6 + noCount * 1.2, 5.3);
+  // Avoid covering the No button while the Yes button grows.
+  const yesSize = Math.min(1.6 * Math.pow(1.25, noCount), 3.4);
   const reaction = noReactions[Math.min(noCount, noReactions.length - 1)];
 
   return (
@@ -126,13 +129,13 @@ export default function App() {
                 onClick={handleYesClick}
                 style={{
                   fontSize: `clamp(1.35rem, ${yesSize * 2.2}vw, ${yesSize}rem)`,
-                  padding: `${Math.min(18 + noCount * 5, 40)}px ${Math.min(45 + noCount * 9, 78)}px`,
+                  padding: `${Math.min(18 + noCount * 4, 38)}px ${Math.min(45 + noCount * 7, 74)}px`,
                 }}
               >
                 Yes
               </button>
               <button id="no-btn" ref={noButtonRef} type="button" onClick={handleNoClick}
-                onMouseEnter={runAway} onTouchStart={runAway}
+                onMouseEnter={runAway} onTouchStart={(event) => { if (noCount >= 5) { event.preventDefault(); runAway(); } }}
                 style={noPosition ? { position: "fixed", left: noPosition.left, top: noPosition.top, zIndex: 50 } : undefined}>
                 {noButtonLines[Math.min(noCount, noButtonLines.length - 1)]}
               </button>
