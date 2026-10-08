@@ -122,7 +122,7 @@ export default function App() {
                 alt="A cute character asking you to say yes"
               />
             </div>
-            <div className="buttons">
+            <div className={`buttons${noCount >= 4 ? " no-centered" : ""}`}>
               <button
                 id="yes-btn"
                 type="button"
@@ -136,7 +136,7 @@ export default function App() {
               </button>
               <button id="no-btn" ref={noButtonRef} type="button" onClick={handleNoClick}
                 onMouseEnter={runAway} onTouchStart={(event) => { if (noCount >= 5) { event.preventDefault(); runAway(); } }}
-                style={noPosition ? { position: "fixed", left: noPosition.left, top: noPosition.top, zIndex: 50 } : undefined}>
+                style={noPosition ? { position: "fixed", left: noPosition.left, top: noPosition.top, zIndex: 50, transform: "none" } : undefined}>
                 {noButtonLines[Math.min(noCount, noButtonLines.length - 1)]}
               </button>
             </div>
