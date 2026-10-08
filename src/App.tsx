@@ -23,29 +23,30 @@ const confettiColors = ["#b50924", "#e3273c", "#ff574f", "#ffffff", "#ffd0ad", "
 export default function App() {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const [noEnding, setNoEnding] = useState(false);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
+  const [noPosition, setNoPosition] = useState<{ left: number; top: number } | null>(null);
   const [toast, setToast] = useState("");
   const [musicOn, setMusicOn] = useState(false);
   const [musicTouched, setMusicTouched] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handleNoClick = () => {
-    if (noCount >= noButtonLines.length - 1) {
-      setNoEnding(true);
-    } else {
-      setNoCount((count) => count + 1);
-    }
+    setNoCount((count) => count + 1);
     setToast("");
   };
 
-  const handleTryAgain = () => {
-    setNoEnding(false);
-    setNoCount(0);
-    setToast("");
+  const runAway = () => {
+    if (noCount < 5 || !noButtonRef.current) return;
+    const button = noButtonRef.current;
+    const margin = 20;
+    setNoPosition({
+      left: Math.random() * Math.max(0, window.innerWidth - button.offsetWidth - margin) + margin / 2,
+      top: Math.random() * Math.max(0, window.innerHeight - button.offsetHeight - margin) + margin / 2,
+    });
   };
 
   const handleYesClick = () => {
-    if (noCount < 4) {
+    if (noCount < 5) {
       setToast(
         noCount === 0
           ? "try saying no first... I bet you want to know what happens 😏"
@@ -107,13 +108,6 @@ export default function App() {
             <img className="yes-gif" src={yesReaction} alt="A character celebrating" />
             <p className="yes-message">You just made my whole heart happy! ❤️</p>
           </div>
-        ) : noEnding ? (
-          <div className="no-ending">
-            <h1>Not even snacks?! 💔</h1>
-            <img className="yes-gif" src={noReactions[1]} alt="A sad little character" />
-            <p>Well, I had to try! 🍓</p>
-            <button className="try-again-btn" type="button" onClick={handleTryAgain}>Try again ❤️</button>
-          </div>
         ) : (
           <>
             <h1>Do you Love Me? ❤️</h1>
@@ -137,7 +131,9 @@ export default function App() {
               >
                 Yes
               </button>
-              <button id="no-btn" type="button" onClick={handleNoClick}>
+              <button id="no-btn" ref={noButtonRef} type="button" onClick={handleNoClick}
+                onMouseEnter={runAway} onTouchStart={runAway}
+                style={noPosition ? { position: "fixed", left: noPosition.left, top: noPosition.top, zIndex: 50 } : undefined}>
                 {noButtonLines[Math.min(noCount, noButtonLines.length - 1)]}
               </button>
             </div>
