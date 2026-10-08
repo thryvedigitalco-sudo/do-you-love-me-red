@@ -23,13 +23,24 @@ const confettiColors = ["#b50924", "#e3273c", "#ff574f", "#ffffff", "#ffd0ad", "
 export default function App() {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
+  const [noEnding, setNoEnding] = useState(false);
   const [toast, setToast] = useState("");
   const [musicOn, setMusicOn] = useState(false);
   const [musicTouched, setMusicTouched] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handleNoClick = () => {
-    setNoCount((count) => count + 1);
+    if (noCount >= noButtonLines.length - 1) {
+      setNoEnding(true);
+    } else {
+      setNoCount((count) => count + 1);
+    }
+    setToast("");
+  };
+
+  const handleTryAgain = () => {
+    setNoEnding(false);
+    setNoCount(0);
     setToast("");
   };
 
@@ -95,6 +106,13 @@ export default function App() {
             <h1 className="yes-title">I knew you loved me! ❤️</h1>
             <img className="yes-gif" src={yesReaction} alt="A character celebrating" />
             <p className="yes-message">You just made my whole heart happy! ❤️</p>
+          </div>
+        ) : noEnding ? (
+          <div className="no-ending">
+            <h1>Not even snacks?! 💔</h1>
+            <img className="yes-gif" src={noReactions[1]} alt="A sad little character" />
+            <p>Well, I had to try! 🍓</p>
+            <button className="try-again-btn" type="button" onClick={handleTryAgain}>Try again ❤️</button>
           </div>
         ) : (
           <>
